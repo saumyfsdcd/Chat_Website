@@ -14,10 +14,14 @@ app.get("/", (req,res)=>{
 })
 
 io.on("connection", (socket)=>{
-    console.log("user connected")
+    io.emit('user connected', "user connected")
     socket.on('chat message', (msg)=>{
         // console.log(msg)
         io.emit('chat message', msg);
+    })
+
+    socket.on('name', (nam)=>{
+        io.emit('name', nam);
     })
 })
 const port=process.env.PORT || 3000;

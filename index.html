@@ -96,6 +96,15 @@
             font-size: 30px;
         }
 
+        #newms{
+            text-align: center;
+            /* height: 10px; */
+            font-size: 10px;
+            background: #262626;
+            margin-left: 0px;
+            margin-bottom: 0px;
+        }
+
         @media only screen and (max-width: 1497px) {
             .hero {
                 width: 70vw;
@@ -143,6 +152,23 @@
             var h = document.createElement("p");
             h.textContent = msg;
             item.appendChild(h);
+            message.appendChild(item);
+
+            message.scrollTop=message.scrollHeight;
+        })
+
+        socket.on('user connected', (s)=>{
+            var name=prompt("what is your name?");
+            socket.emit('name', name);            
+        })
+
+        socket.on('name', (nam)=>{
+            var item = document.createElement("div");
+            item.id = "newms";
+            var h = document.createElement("p");
+            h.textContent = nam+" connected";
+            item.appendChild(h);
+            
             message.appendChild(item);
 
             message.scrollTop=message.scrollHeight;
