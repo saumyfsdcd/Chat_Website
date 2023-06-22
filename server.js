@@ -20,9 +20,9 @@ io.on("connection", (socket)=>{
         io.emit('chat message', msg);
     })
 
-    socket.on('name', (nam)=>{
-        io.emit('name', nam);
-    })
+    // socket.on('name', (nam)=>{
+    //     io.emit('name', nam);
+    // })
 })
 const port=process.env.PORT || 3000;
 
