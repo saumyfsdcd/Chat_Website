@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Website</title>
+    <style>
+        body,
+        html {
+            height: 100%;
+        }
+
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #152617;
+        }
+
+        .hero {
+            height: 70vh;
+            width: 30vw;
+            background-color: #0D0D0D;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .msg {
+            /* background-color: #fff; */
+            height: 90%;
+            /* margin-top: 30px; */
+            width: 100%;
+            overflow: auto;
+        }
+
+        form {
+            display: flex;
+            /* margin-top: 30px; */
+            width: 100%;
+            gap: 15px;
+            margin-bottom: 15px;
+            height: 10%;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        input {
+            width: 80%;
+            height: 80%;
+            margin-left: 10px;
+            border-radius: 15px;
+            padding-left: 10px;
+            font-size: 20px;
+        }
+
+        button {
+            height: 90%;
+            margin-right: 5px;
+            width: 12%;
+            border-radius: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        button:hover {
+            cursor: pointer;
+        }
+
+        #newmsg {
+            width: 50%;
+            margin: 15px;
+            background-color: #262626;
+            height: 10%;
+            display: flex;
+            align-items: center;
+
+        }
+
+        p {
+            font-size: 25px;
+            margin-left: 20px;
+            color: #D7F205;
+            font-weight: bold;
+        }
+
+        .msg>#newmsg:nth-child(odd) {
+            background-color: #2D2C31;
+            float: right;
+        }
+
+        i {
+            font-size: 30px;
+        }
+
+        @media only screen and (max-width: 1497px) {
+            .hero {
+                width: 70vw;
+            }
+        }
+
+        @media only screen and (max-width: 669px) {
+            i {
+                font-size: 25px;
+                margin: 5px;
+                /* width: 15%; */
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="hero">
+        <div id="message" class="msg">
+        </div>
+        <form id="form" action="/" method="post">
+            <input id="input" type="text" placeholder="Enter your Text here..." autocomplete="off">
+            <button type="submit"><i class="fa-solid fa-paper-plane"></i></button>
+        </form>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        var socket = io();
+        // var 
+        var message = document.getElementById("message")
+        var form = document.getElementById("form")
+        var input = document.getElementById("input");
+
+        form.addEventListener("submit", (e) => {
+            e.preventDefault();
+            if (input.value) {
+                socket.emit("chat message", input.value)
+            }
+            input.value = "";
+        })
+
+        socket.on('chat message', (msg) => {
+            var item = document.createElement("div");
+            item.id = "newmsg";
+            var h = document.createElement("p");
+            h.textContent = msg;
+            item.appendChild(h);
+            message.appendChild(item);
+
+            message.scrollTop=message.scrollHeight;
+        })
+    </script>
+    <script src="https://kit.fontawesome.com/513ea60794.js" crossorigin="anonymous"></script>
+</body>
+
+</html>
